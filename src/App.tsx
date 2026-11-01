@@ -9,8 +9,13 @@ async function api<T = any>(path: string, options: RequestInit = {}): Promise<T>
     ...options,
     headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}), ...(options.headers || {}) }
   });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.error || 'Não foi possível concluir.');
+  const raw = await response.text();
+  let data: any = {};
+  try { data = raw ? JSON.parse(raw) : {}; } catch { data = {}; }
+  if (!response.ok) {
+    const detail = typeof data.error === 'string' ? data.error : raw.replace(/<[^>]*>/g, ' ').replace(/\\s+/g, ' ').trim().slice(0, 180);
+    throw new Error(detail || `Falha HTTP ${response.status} ao acessar /api/${path}.`);
+  }
   return data as T;
 }
 export default function App() {
