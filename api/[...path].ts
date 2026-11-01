@@ -86,7 +86,7 @@ export default async function handler(req: any, res: any) {
   if (!SECRET) return send(res, 500, { error: 'Servidor sem chave de autenticação configurada.' });
 
   const rawPath = Array.isArray(req.query.path) ? req.query.path.join('/') : String(req.query.path || '');
-  const path = '/' + rawPath.replace(/^\\/+|\\/+$/g, '');
+  const path = '/' + rawPath.replace(/^\/+|\/+$/g, '');
   try {
     if (req.method === 'GET' && path === '/status') {
       const data = await readData();
