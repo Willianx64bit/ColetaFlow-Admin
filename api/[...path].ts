@@ -85,7 +85,10 @@ export default async function handler(req: any, res: any) {
   if (!originAllowed(req)) return send(res, 403, { error: 'Origem não autorizada.' });
   if (!SECRET) return send(res, 500, { error: 'Servidor sem chave de autenticação configurada.' });
 
-  const rawPath = Array.isArray(req.query.path) ? req.query.path.join('/') : String(req.query.path || '');
+  const requestPath = new URL(req.url || '/', 'http://localhost').pathname;
+  const rawPath = requestPath.startsWith('/api/')
+    ? requestPath.slice('/api/'.length)
+    : (Array.isArray(req.query.path) ? req.query.path.join('/') : String(req.query.path || ''));
   const path = '/' + rawPath.replace(/^\/+|\/+$/g, '');
   try {
     if (req.method === 'GET' && path === '/status') {
