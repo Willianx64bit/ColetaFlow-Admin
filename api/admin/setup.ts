@@ -3,10 +3,7 @@ import { createHmac, randomBytes, scryptSync } from 'node:crypto';
 
 const STORE_PATH = 'private/coletaflow-access.json';
 const SECRET = process.env.AUTH_SECRET || process.env.BLOB_READ_WRITE_TOKEN || '';
-const ALLOWED_ORIGINS = new Set([
-  'https://coletaflow-willianx64bit.vercel.app',
-  'https://coletaflow-admin-willianx64bit.vercel.app',
-]);
+
 
 function send(res: any, status: number, body: unknown) {
   res.setHeader('Cache-Control', 'no-store');
@@ -15,7 +12,10 @@ function send(res: any, status: number, body: unknown) {
 
 export default async function handler(req: any, res: any) {
   const origin = req.headers.origin as string | undefined;
-  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+  const requestHost = req.headers.host as string | undefined;
+  const expectedOrigin = requestHost ? 'https://' + requestHost : '';
+  // Aceita somente requisições same-origin, inclusive URLs únicas de deployment da Vercel.
+  if (origin && origin !== expectedOrigin) {
     return send(res, 403, { error: 'Origem não autorizada.' });
   }
   if (req.method !== 'POST') return send(res, 405, { error: 'Método não permitido.' });
