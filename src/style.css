@@ -1,2 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
 :root{font-family:'DM Sans',system-ui,sans-serif;color:#e8edf6;background:#0b1220;font-synthesis:none;text-rendering:optimizeLegibility}*{box-sizing:border-box}body{margin:0;min-width:320px;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#1c3150 0%,#0b1220 58%)}button,input{font:inherit}.loginShell,.shell{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 18px}.loginCard{width:min(100%,440px);padding:38px;background:#111c2d;border:1px solid #26364d;border-radius:22px;box-shadow:0 24px 80px #0006}.brand{display:flex;align-items:center;gap:12px}.brand b{display:block;font-size:20px;letter-spacing:-.6px}.brand small{display:block;color:#8294ad;font-size:9px;letter-spacing:1.8px;margin-top:3px}.centered{justify-content:center;margin-bottom:36px}.mark{width:44px;height:44px;border-radius:13px;background:linear-gradient(145deg,#22c58b,#0b9878);display:grid;place-items:center;color:#05291f}.intro{margin-bottom:26px}.eyebrow{font-size:10px;letter-spacing:1.8px;font-weight:800;color:#28c995}.intro h1,.welcome h1{font-size:27px;letter-spacing:-1px;margin:9px 0}.intro p,.welcome p{color:#91a2b9;font-size:13px;line-height:1.65;margin:0}form label{display:block;color:#cbd5e1;font-size:12px;font-weight:700;margin:17px 0 8px}.field{height:48px;border:1px solid #30415a;border-radius:10px;background:#0c1625;display:flex;align-items:center;gap:10px;padding:0 13px;color:#8294ad}.field:focus-within{border-color:#20bd8c;box-shadow:0 0 0 3px #20bd8c20}.field input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#f3f6fb;font-size:13px}.field input::placeholder{color:#64758c}.eye{border:0;background:none;color:#93a4ba;display:grid;place-items:center;cursor:pointer}.submit{width:100%;height:49px;border:0;border-radius:10px;margin-top:24px;background:#20bd8c;color:#05291f;font-weight:800;font-size:13px;cursor:pointer}.submit:disabled{opacity:.6}.error{margin-top:13px;color:#ff9a9a;background:#451f2a;padding:10px 12px;border-radius:8px;font-size:12px}.notice{display:flex;gap:9px;align-items:flex-start;margin-top:23px;padding-top:18px;border-top:1px solid #26364d;color:#8294ad;font-size:11px;line-height:1.55}.notice svg{flex:none;color:#27c28e}.loginShell footer,.shell footer{margin-top:25px;color:#596b83;font-size:10px}.shell{justify-content:flex-start;align-items:stretch;max-width:1100px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;width:100%;padding:12px 0}.logout{display:flex;align-items:center;gap:8px;background:#17263a;border:1px solid #30415a;border-radius:9px;color:#cbd5e1;padding:10px 14px;cursor:pointer}.welcome{margin:auto;width:min(100%,680px);padding:48px;background:#111c2d;border:1px solid #26364d;border-radius:22px}.welcomeIcon{width:58px;height:58px;border-radius:16px;background:#123c36;color:#2bd09b;display:grid;place-items:center;margin-bottom:28px}.welcome h1{font-size:34px}.account{display:flex;flex-direction:column;gap:5px;margin-top:30px;padding:17px;background:#0c1625;border:1px solid #26364d;border-radius:10px}.account span{font-size:10px;color:#8294ad;text-transform:uppercase;letter-spacing:1px}.account b{font-size:13px}@media(max-width:520px){.loginCard{padding:27px 22px}.welcome{padding:30px 24px}.welcome h1{font-size:28px}}
+.loading{color:#a7b7cc;text-align:center;font-size:13px;padding:14px 0}
+.adminContent{width:min(100%,900px);margin:48px auto 24px}
+.adminHeading{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:25px}
+.adminHeading h1{font-size:30px;letter-spacing:-1px;margin:8px 0}
+.adminHeading p{font-size:13px;color:#91a2b9;margin:0}
+.userCount{display:flex;align-items:center;gap:8px;background:#122b31;border:1px solid #1d5147;color:#2bd09b;border-radius:13px;padding:13px 16px}
+.userCount b{font-size:22px}.userCount span{font-size:11px;color:#9bb6b0}
+.adminCard{background:#111c2d;border:1px solid #26364d;border-radius:16px;padding:22px;margin-bottom:18px}
+.cardTitle{display:flex;align-items:center;gap:12px;color:#29c995;margin-bottom:18px}
+.cardTitle>div{display:flex;flex-direction:column;gap:3px;flex:1}
+.cardTitle b{color:#e8edf6;font-size:14px}.cardTitle small{color:#8294ad;font-size:11px}
+.createUserForm{display:grid;grid-template-columns:1fr 1fr auto;align-items:end;gap:13px}
+.createUserForm label{margin:0;color:#cbd5e1;font-size:11px;font-weight:700}
+.createUserForm .field{margin-top:8px;height:45px}
+.createButton{margin:0;height:45px;padding:0 17px;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:8px}
+.refresh{border:1px solid #30415a;border-radius:8px;background:#0c1625;color:#a7b7cc;padding:8px;display:grid;place-items:center;cursor:pointer}
+.emptyUsers{text-align:center;padding:30px;color:#8294ad;font-size:12px;border:1px dashed #30415a;border-radius:10px}
+.userList{display:flex;flex-direction:column}
+.userRow{display:flex;align-items:center;gap:13px;padding:13px 0;border-top:1px solid #26364d}
+.userAvatar{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:#172b40;color:#8da4bf}
+.userDetails{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+.userDetails b{font-size:13px;color:#e8edf6}.userDetails small{font-size:10px;color:#8294ad}
+.status{font-size:10px;font-weight:700;border-radius:20px;padding:6px 9px}
+.status.active{background:#123a31;color:#35d5a1}.status.inactive{background:#3b2730;color:#ff9a9a}
+.userActions{display:flex;gap:6px}
+.userActions button{width:34px;height:34px;display:grid;place-items:center;border:1px solid #30415a;border-radius:8px;background:#0c1625;color:#a7b7cc;cursor:pointer}
+.userActions button:hover{border-color:#25bd8d;color:#31d29e}
+.userActions .dangerAction:hover{border-color:#b94e5b;color:#ff8b95}
+.globalError,.globalSuccess{width:min(100%,900px);margin:0 auto 14px}
+.success{display:flex;align-items:center;gap:9px;background:#123a31;border:1px solid #1d6b55;color:#65e2b8;padding:11px 13px;border-radius:9px;font-size:12px}
+@media(max-width:700px){.adminContent{margin:28px auto}.adminHeading{align-items:flex-start}.adminHeading h1{font-size:25px}.createUserForm{grid-template-columns:1fr}.createButton{width:100%;margin-top:2px}.userRow{gap:8px;flex-wrap:wrap}.userDetails{min-width:calc(100% - 60px)}.userActions{margin-left:auto}.status{margin-left:50px}}
