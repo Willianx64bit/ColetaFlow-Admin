@@ -26,7 +26,7 @@ export default async function handler(req: any, res: any) {
 
   try {
     const { email, password } = req.body || {};
-    if (typeof email !== 'string' || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.trim())) {
+    if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       return send(res, 400, { error: 'Informe um e-mail válido.' });
     }
     if (typeof password !== 'string' || password.length < 10) {
