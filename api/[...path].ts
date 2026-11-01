@@ -90,21 +90,30 @@ export default async function handler(req: any, res: any) {
     ? requestPath.slice('/api/'.length)
     : (Array.isArray(req.query.path) ? req.query.path.join('/') : String(req.query.path || ''));
   const path = '/' + rawPath.replace(/^\/+|\/+$/g, '');
+  let stage = 'route_dispatch';
   try {
     if (req.method === 'GET' && path === '/status') {
+      stage = 'status_blob_read';
       const data = await readData();
       return send(res, 200, { initialized: !!data?.admin });
     }
     if (req.method === 'POST' && path === '/admin/setup') {
+      stage = 'setup_validate_payload';
       const { email, password } = req.body || {};
       if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return send(res, 400, { error: 'Informe um e-mail válido.' });
       if (typeof password !== 'string' || password.length < 10) return send(res, 400, { error: 'Use uma senha com pelo menos 10 caracteres.' });
+      stage = 'setup_check_existing_admin';
       const existing = await readData();
       if (existing?.admin) return send(res, 409, { error: 'O administrador já foi configurado.' });
       const salt = randomBytes(16).toString('hex');
       const data: Data = { admin: { email: email.trim().toLowerCase(), salt, hash: passwordHash(password, salt) }, users: [] };
+      stage = 'setup_blob_create';
       try { await writeData(data, true); }
-      catch { return send(res, 409, { error: 'A configuração inicial já foi concluída. Atualize a página.' }); }
+      catch (error: any) {
+        console.error('ColetaFlow setup blob create failed:', { name: error?.name, status: error?.status, statusCode: error?.statusCode, code: error?.code, message: String(error?.message || '').slice(0, 300) });
+        return send(res, 500, { error: 'Falha ao gravar o cadastro inicial no armazenamento. Nenhuma conta foi confirmada.' });
+      }
+      stage = 'setup_create_session';
       const token = sign({ role: 'admin', exp: Date.now() + 8 * 60 * 60 * 1000 });
       return send(res, 201, { token, email: data.admin.email });
     }
@@ -175,8 +184,8 @@ export default async function handler(req: any, res: any) {
       return send(res, 200, { username: user.username });
     }
     return send(res, 404, { error: 'Rota não encontrada.' });
-  } catch (error) {
-    console.error('ColetaFlow access API error:', error);
-    return send(res, 500, { error: 'Não foi possível concluir a operação. Tente novamente.' });
+  } catch (error: any) {
+    console.error('ColetaFlow access API error:', { stage, method: req.method, path, name: error?.name, status: error?.status, statusCode: error?.statusCode, code: error?.code, message: String(error?.message || '').slice(0, 300) });
+    return send(res, 500, { error: 'Falha interna na etapa: ' + stage + '. Consulte os logs do servidor para identificar a causa.' });
   }
 }
