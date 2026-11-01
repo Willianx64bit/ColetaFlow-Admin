@@ -3,10 +3,12 @@ import { createHmac, randomBytes, scryptSync, timingSafeEqual, randomUUID } from
 
 const STORE_PATH = 'private/coletaflow-access.json';
 const SECRET = process.env.AUTH_SECRET || process.env.BLOB_READ_WRITE_TOKEN || '';
-const ALLOWED_ORIGINS = new Set([
-  'https://coletaflow-willianx64bit.vercel.app',
-  'https://coletaflow-admin-willianx64bit.vercel.app',
-]);
+function isAllowedOrigin(req: any) {
+  const origin = req.headers.origin as string | undefined;
+  const host = req.headers.host as string | undefined;
+  // Same-origin only: supports canonical and unique Vercel deployment URLs.
+  return !origin || (!!host && origin === 'https://' + host);
+}
 
 type User = { id: string; username: string; salt: string; hash: string; active: boolean; createdAt: string };
 type Data = { admin: { email: string; salt: string; hash: string } | null; users: User[] };
@@ -69,13 +71,12 @@ function bearer(req: any) {
   return header.startsWith('Bearer ') ? header.slice(7) : '';
 }
 function originAllowed(req: any) {
-  const origin = req.headers.origin;
-  return !origin || ALLOWED_ORIGINS.has(origin);
+  return isAllowedOrigin(req);
 }
 
 export default async function handler(req: any, res: any) {
   const origin = req.headers.origin as string | undefined;
-  if (origin && ALLOWED_ORIGINS.has(origin)) {
+  if (origin && isAllowedOrigin(req)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
     res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
